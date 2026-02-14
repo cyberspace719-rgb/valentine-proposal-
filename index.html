@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fce4ec; /* Light Pink */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevents scrolling when button gets huge */
+            text-align: center;
+        }
+
+        .header_text {
+            font-size: 40px;
+            color: #d32f2f;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .gif_container img {
+            width: 300px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #yesButton {
+            background-color: #4caf50; /* Green */
+            color: white;
+            font-weight: bold;
+            z-index: 10; /* Keeps "Yes" on top */
+        }
+
+        #noButton {
+            background-color: #f44336; /* Red */
+            color: white;
+            font-weight: bold;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="gif_container">
+            <img id="mainImage" src="https://media.tenor.com/f2Q1J8SgD0sAAAAj/minions-love.gif" alt="Minion Love">
+        </div>
+
+        <h1 class="header_text">Will you be my valentine?</h1>
+
+        <div class="buttons">
+            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
+            <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        const noButton = document.getElementById('noButton');
+        const yesButton = document.getElementById('yesButton');
+        const mainImage = document.getElementById('mainImage');
+        const headerText = document.querySelector('.header_text');
+
+        // Phrases that cycle when "No" is clicked
+        const texts = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Last chance!",
+            "Surely not?",
+            "You might regret this!",
+            "Give it another thought!",
+            "Are you absolutely certain?",
+            "This could be a mistake!",
+            "Have a heart!",
+            "Don't be so cold!",
+            "Change of heart?",
+            "Wouldn't you reconsider?",
+            "Is that your final answer?",
+            "You're breaking my heart ;(",
+            "Plsss? :("
+        ];
+
+        let clickCount = 0;
+
+        function moveButton() {
+            clickCount++;
+            
+            // 1. Change text on No button
+            if (clickCount < texts.length) {
+                noButton.innerText = texts[clickCount];
+            } else {
+                noButton.innerText = texts[texts.length - 1]; 
+            }
+
+            // 2. Make the Yes button grow HUGE
+            const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            const currentPadding = parseFloat(window.getComputedStyle(yesButton).paddingTop);
+            
+            yesButton.style.fontSize = `${currentSize * 1.5}px`;
+            yesButton.style.padding = `${currentPadding * 1.2}px`;
+
+            // 3. Change image to sad minion
+            mainImage.src = "https://media.tenor.com/Eqq_s91tI4UAAAAi/minion-sad.gif"; 
+        }
+
+        function nextPage() {
+            // Clear screen and show celebration
+            document.body.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+                    <h1 class="header_text" style="font-size: 50px;">YAYYY!!! ❤️</h1>
+                    <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Celebration" style="width: 300px; border-radius: 15px;">
+                </div>
+            `;
+        }
+    </script>
+
+</body>
+</html>
